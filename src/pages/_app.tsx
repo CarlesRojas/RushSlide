@@ -1,8 +1,24 @@
-import "../styles/globals.css";
-import type { AppType } from "next/dist/shared/lib/utils";
+import type { AppType } from "next/dist/shared/lib/utils"
+import Head from "next/head"
+import { useEffect } from "react"
+import "../styles/globals.css"
 
 const MyApp: AppType = ({ Component, pageProps }) => {
-  return <Component {...pageProps} />;
-};
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "development" && "serviceWorker" in navigator)
+      window.addEventListener("load", () => navigator.serviceWorker.register("/sw.mjs"))
+  })
 
-export default MyApp;
+  return (
+    <>
+      <Head>
+        <meta name="viewport" content="initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover" />
+        <title>{"Rush Slide"}</title>
+      </Head>
+
+      <Component {...pageProps} />
+    </>
+  )
+}
+
+export default MyApp
