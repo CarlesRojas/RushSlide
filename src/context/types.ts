@@ -16,3 +16,7 @@ export interface Piece {
 export type BoardState = Piece[]
 
 export type Levels = { [key: number]: string }
+
+export type ActiveBoardTypes = { [key in BoardType]: boolean }
+
+export type MinMax = { min: number; max: number }

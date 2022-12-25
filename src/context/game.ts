@@ -1,14 +1,14 @@
-import { BoardType } from "@context/types"
+import { ActiveBoardTypes, BoardType, MinMax } from "@context/types"
 import { atom } from "jotai"
 
 // BOARD
 export const cellSizeAtom = atom(0)
 
 // SETTINGS
-export const activeBoardTypesAtom = atom<{ [key in BoardType]: boolean }>({
+export const activeBoardTypesAtom = atom<ActiveBoardTypes>({
   [BoardType.NORMAL]: true,
   [BoardType.ONE_WALL]: true,
   [BoardType.TWO_WALLS]: true,
 })
 
-export const difficultyAtom = atom({ min: 1, max: 60 })
+export const difficultyAtom = atom<MinMax>({ min: 1, max: 60 })
