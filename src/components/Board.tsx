@@ -1,6 +1,6 @@
 import Piece from "@components/Piece"
 import Wall from "@components/Wall"
-import { activeBoardTypesAtom, cellSizeAtom, difficultyAtom } from "@context/game"
+import { activeBoardTypesAtom, difficultyAtom, movingPieceAtom } from "@context/game"
 import { BoardState } from "@context/types"
 import { getBoardStateFromLevel } from "@utils/boardTransformations"
 import { getLevel } from "@utils/getLevel"
@@ -9,9 +9,9 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import Cell from "./Cell"
 
 const Board = () => {
-  const [cellSize] = useAtom(cellSizeAtom)
   const [difficulty] = useAtom(difficultyAtom)
   const [activeBoardTypes] = useAtom(activeBoardTypesAtom)
+  const [, setMovingPiece] = useAtom(movingPieceAtom)
 
   const history = useRef<BoardState[]>([])
   const [currentLevel, setCurrentLevel] = useState<string | null>(null)
@@ -20,7 +20,6 @@ const Board = () => {
     const level = await getLevel(activeBoardTypes, difficulty)
     if (!level) return
     history.current = [getBoardStateFromLevel(level)]
-    console.log(level)
     setCurrentLevel(level)
   }, [activeBoardTypes, difficulty])
 
@@ -30,11 +29,23 @@ const Board = () => {
 
   const currentBoard = history.current[history.current.length - 1]
 
+  const updateBoard = (boardState: BoardState) => {
+    history.current.push(boardState)
+    setCurrentLevel(boardState.board)
+  }
+
+  useEffect(() => {
+    setMovingPiece(false)
+  }, [currentLevel, setMovingPiece])
+
   return (
-    <div className="relative h-full w-full">
+    <div className="relative h-full w-full touch-none">
       {currentBoard && currentBoard.walls.map((wall, i) => <Wall key={i} wall={wall} />)}
 
-      {currentBoard && currentBoard.pieces.map((piece, i) => <Piece key={i} piece={piece} />)}
+      {currentBoard &&
+        currentBoard.pieces.map((piece) => (
+          <Piece key={piece.id} piece={piece} boardState={currentBoard} updateBoard={updateBoard} />
+        ))}
 
       {Array.from({ length: 6 }, (_, row) =>
         Array.from({ length: 6 }, (_, column) => <Cell key={`${row}-${column}`} position={{ row, column }} />),

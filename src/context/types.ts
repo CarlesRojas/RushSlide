@@ -5,6 +5,7 @@ export enum BoardType {
 }
 
 export interface Piece {
+  id: string
   horizontal: boolean
   length: 2 | 3
   position: {

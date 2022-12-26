@@ -1,19 +1,74 @@
-import { cellSizeAtom } from "@context/game"
-import { Piece } from "@context/types"
+import { cellSizeAtom, movingPieceAtom } from "@context/game"
+import { BoardState, Piece } from "@context/types"
+import { movePiece } from "@utils/movePiece"
+import { motion, PanInfo, useAnimation } from "framer-motion"
 import { useAtom } from "jotai"
+import { useRef } from "react"
 import { HiArrowRight } from "react-icons/hi"
+
+type PanEvent = MouseEvent | TouchEvent | PointerEvent
 
 interface Props {
   piece: Piece
+  boardState: BoardState
+  updateBoard: (boardState: BoardState) => void
 }
 
-const Piece = ({ piece }: Props) => {
+const Piece = ({ piece, boardState, updateBoard }: Props) => {
   const [cellSize] = useAtom(cellSizeAtom)
+  const [movingPiece, setMovingPiece] = useAtom(movingPieceAtom)
+
+  const moving = useRef(false)
+  const displacement = useRef(0)
+
   const { position, horizontal, length, movement, red } = piece
+  const { backwards, forwards } = movement
+
+  const onAnimationComplete = () => {
+    moving.current = false
+
+    if (displacement.current === 0) {
+      setMovingPiece(false)
+      return
+    }
+
+    const newBoardState = movePiece(boardState, piece, displacement.current)
+    updateBoard(newBoardState)
+  }
+
+  const pieceMovement = useAnimation()
+
+  const onPanStart = () => {
+    if (movingPiece) return
+
+    moving.current = true
+    setMovingPiece(true)
+  }
+
+  const onPan = (_: PanEvent, info: PanInfo) => {
+    if (!moving.current) return
+
+    const offset = horizontal ? info.offset.x : info.offset.y
+    const clamped = Math.max(Math.min(offset, forwards * cellSize), -backwards * cellSize)
+    horizontal ? pieceMovement.set({ x: clamped }) : pieceMovement.set({ y: clamped })
+  }
+
+  const onPanEnd = (_: PanEvent, info: PanInfo) => {
+    if (!moving.current) return
+
+    const offset = horizontal ? info.offset.x : info.offset.y
+    const clamped = Math.max(Math.min(offset, forwards * cellSize), -backwards * cellSize)
+    const rounded = Math.round(clamped / cellSize)
+    horizontal
+      ? pieceMovement.start({ x: rounded * cellSize, transition: { bounce: 0, duration: 0.1 } })
+      : pieceMovement.start({ y: rounded * cellSize, transition: { bounce: 0, duration: 0.1 } })
+
+    displacement.current = rounded
+  }
 
   return (
-    <div
-      className="absolute z-10"
+    <motion.div
+      className="absolute z-10 touch-none"
       style={{
         top: position.row * cellSize,
         left: position.column * cellSize,
@@ -21,16 +76,21 @@ const Piece = ({ piece }: Props) => {
         height: cellSize * (horizontal ? 1 : length),
         padding: cellSize * 0.075,
       }}
+      onPanStart={onPanStart}
+      onPan={onPan}
+      onPanEnd={onPanEnd}
+      onAnimationComplete={onAnimationComplete}
+      animate={pieceMovement}
     >
       <div
-        className={`relative grid h-full w-full grid-cols-2 rounded-md selection:items-center lg:rounded-lg xl:rounded-xl ${
+        className={`pointer-events-none relative grid h-full w-full grid-cols-2 rounded-md selection:items-center lg:rounded-lg xl:rounded-xl ${
           red ? "bg-red-500" : "bg-blue-500"
         }`}
       >
         <div />
         {red && <HiArrowRight className="h-full w-full p-[20%] text-red-700" />}
       </div>
-    </div>
+    </motion.div>
   )
 }
 

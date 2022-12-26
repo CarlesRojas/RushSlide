@@ -10,7 +10,7 @@ const Cell = ({ position }: Props) => {
 
   return (
     <div
-      className="absolute"
+      className="pointer-events-none absolute"
       style={{
         top: position.row * cellSize,
         left: position.column * cellSize,

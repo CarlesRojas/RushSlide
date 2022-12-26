@@ -12,3 +12,5 @@ export const activeBoardTypesAtom = atom<ActiveBoardTypes>({
 })
 
 export const difficultyAtom = atom<MinMax>({ min: 10, max: 12 })
+
+export const movingPieceAtom = atom(false)

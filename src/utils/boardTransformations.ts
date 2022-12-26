@@ -1,6 +1,7 @@
 import { PieceType } from "@context/constants"
 import { BoardState, Piece, Wall } from "@context/types"
 import { getPieceMovement } from "@utils/getPieceMovement"
+import uuid from "react-uuid"
 
 export const getBoardStateFromLevel = (level: string): BoardState => {
   const boardState: BoardState = {
@@ -36,6 +37,7 @@ export const getBoardStateFromLevel = (level: string): BoardState => {
         : row + 2 < board.length && board[row + 2] && (board[row + 2] as string[])[column] === cell
 
       const piece: Piece = {
+        id: uuid(),
         horizontal,
         length: triple ? 3 : 2,
         position: { row, column },

@@ -12,7 +12,7 @@ const Wall = ({ wall }: Props) => {
 
   return (
     <div
-      className="absolute z-10"
+      className="pointer-events-none absolute z-10"
       style={{
         top: position.row * cellSize,
         left: position.column * cellSize,
