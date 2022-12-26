@@ -25,8 +25,6 @@ const Board = () => {
     if (currentLevel) history.current = [getBoardStateFromLevel(currentLevel)]
   }, [currentLevel])
 
-  console.log(currentLevel)
-
   return <div></div>
 }
 
