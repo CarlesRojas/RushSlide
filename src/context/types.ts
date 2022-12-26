@@ -11,9 +11,27 @@ export interface Piece {
     row: number
     column: number
   }
+  red: boolean
+  movement: Movement
 }
 
-export type BoardState = Piece[]
+export interface Wall {
+  position: {
+    row: number
+    column: number
+  }
+}
+
+export interface BoardState {
+  pieces: Piece[]
+  walls: Wall[]
+  board: string
+}
+
+export interface Movement {
+  backwards: number
+  forwards: number
+}
 
 export type Levels = { [key: number]: string }
 

@@ -16,3 +16,9 @@ export const BOARD_TYPE_FOLDER: { [key in BoardType]: string } = {
   [BoardType.ONE_WALL]: "oneWall",
   [BoardType.TWO_WALLS]: "twoWalls",
 }
+
+export enum PieceType {
+  RED = "A",
+  WALL = "x",
+  EMPTY = "o",
+}
