@@ -3,6 +3,7 @@ import { atom } from "jotai"
 
 // BOARD
 export const cellSizeAtom = atom(0)
+export const landscapeAtom = atom(false)
 
 // SETTINGS
 export const activeBoardTypesAtom = atom<ActiveBoardTypes>({

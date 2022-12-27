@@ -19,7 +19,7 @@ const Cell = ({ position }: Props) => {
         padding: cellSize * 0.075,
       }}
     >
-      <div className="relative h-full w-full rounded-md bg-neutral-800 lg:rounded-lg xl:rounded-xl" />
+      <div className="relative h-full w-full rounded-md bg-neutral-200 dark:bg-neutral-800 lg:rounded-lg xl:rounded-xl" />
     </div>
   )
 }

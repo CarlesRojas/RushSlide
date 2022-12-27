@@ -3,17 +3,13 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      gridTemplateAreas: {
-        landscape: ["game header", "game footer"],
-        portrait: ["header", "game", "footer"],
-      },
       gridTemplateColumns: {
-        landscape: "minmax(0, 1fr) minmax(25%, 25rem)",
+        landscape: "minmax(15rem, 25%) minmax(0, 1fr)",
         portrait: "minmax(0, 1fr)",
       },
       gridTemplateRows: {
-        landscape: "minmax(0, 1fr) minmax(0, 1fr)",
-        portrait: "minmax(min-content, 20%) minmax(0, 1fr) minmax(min-content, 20%)",
+        landscape: "minmax(0, 1fr)",
+        portrait: "minmax(min-content, 25%) minmax(0, 1fr)",
       },
     },
   },
