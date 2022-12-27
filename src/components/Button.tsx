@@ -9,7 +9,7 @@ const Button = ({ icon, text, primary, ...rest }: Props) => {
     <button
       className={`${
         primary
-          ? "flex-row gap-2 bg-blue-500"
+          ? "flex-row gap-2 bg-blue-500 text-white"
           : "flex-col gap-1 bg-neutral-200 dark:bg-neutral-800 mouse:hover:bg-neutral-300 mouse:hover:dark:bg-neutral-700"
       } group flex w-full items-center justify-center  rounded-md py-3 lg:rounded-lg xl:rounded-xl `}
       {...rest}
