@@ -6,11 +6,13 @@ import { RiPlayLine } from "react-icons/ri"
 
 const Home: NextPage = () => {
   return (
-    <main className="relative m-auto flex h-full w-full max-w-xl flex-col items-center justify-center gap-8">
-      <Image src={"/logo.png"} alt="rush slide logo" width={96} height={96} />
-      <h1 className="text-5xl font-bold">Rush Slide</h1>
+    <main className="relative m-auto flex h-full w-full max-w-xl flex-col items-center justify-center gap-20">
+      <div className="flex flex-col items-center justify-center gap-6">
+        <Image src={"/logo.png"} alt="rush slide logo" width={80} height={80} />
+        <h1 className="text-6xl font-medium opacity-90">RUSH SLIDE</h1>
+      </div>
 
-      <div className="h-16 w-full" />
+      <div></div>
 
       <div className="h-fit w-fit min-w-[10rem]">
         <Link href={"/game"}>
