@@ -21,7 +21,10 @@ const Wall = ({ wall }: Props) => {
         padding: cellSize * 0.075,
       }}
     >
-      <div className="relative h-full w-full rounded-md bg-neutral-400 lg:rounded-lg xl:rounded-xl" />
+      <div
+        className="relative h-full w-full rounded-md bg-neutral-500 dark:bg-neutral-400 lg:rounded-lg xl:rounded-xl"
+        style={{ boxShadow: "inset 0 0 1rem 0 rgba(0, 0, 0, 0.25)" }}
+      />
     </div>
   )
 }

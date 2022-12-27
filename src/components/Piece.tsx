@@ -68,7 +68,7 @@ const Piece = ({ piece, boardState, updateBoard }: Props) => {
 
   return (
     <motion.div
-      className="absolute z-10 touch-none"
+      className={`absolute z-10 touch-none ${horizontal ? "mouse:cursor-ew-resize" : "mouse:cursor-ns-resize"}`}
       style={{
         top: position.row * cellSize,
         left: position.column * cellSize,
@@ -86,6 +86,7 @@ const Piece = ({ piece, boardState, updateBoard }: Props) => {
         className={`pointer-events-none relative grid h-full w-full grid-cols-2 rounded-md selection:items-center lg:rounded-lg xl:rounded-xl ${
           red ? "bg-red-500" : "bg-blue-500"
         }`}
+        style={{ boxShadow: "inset 0 0 1rem 0 rgba(0, 0, 0, 0.25)" }}
       >
         <div />
         {red && <HiArrowRight className="h-full w-full p-[20%] text-red-700" />}

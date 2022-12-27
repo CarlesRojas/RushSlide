@@ -1,6 +1,6 @@
 import Piece from "@components/Piece"
 import Wall from "@components/Wall"
-import { activeBoardTypesAtom, difficultyAtom, movingPieceAtom } from "@context/game"
+import { activeBoardTypesAtom, difficultyAtom, movesAtom, movingPieceAtom } from "@context/game"
 import { BoardState } from "@context/types"
 import { getBoardStateFromLevel } from "@utils/boardTransformations"
 import { getLevel } from "@utils/getLevel"
@@ -12,31 +12,36 @@ const Board = () => {
   const [difficulty] = useAtom(difficultyAtom)
   const [activeBoardTypes] = useAtom(activeBoardTypesAtom)
   const [, setMovingPiece] = useAtom(movingPieceAtom)
+  const [, setMoves] = useAtom(movesAtom)
 
   const history = useRef<BoardState[]>([])
   const [currentLevel, setCurrentLevel] = useState<string | null>(null)
 
+  const updateBoard = useCallback(
+    (boardState: BoardState) => {
+      history.current.push(boardState)
+      setCurrentLevel(boardState.board)
+      setMoves((prev) => ({ ...prev, moves: history.current.length - 1 }))
+    },
+    [setMoves],
+  )
+
   const initLevel = useCallback(async () => {
-    const level = await getLevel(activeBoardTypes, difficulty)
-    if (!level) return
-    history.current = [getBoardStateFromLevel(level)]
-    setCurrentLevel(level)
-  }, [activeBoardTypes, difficulty])
+    const { level, minimumMoves } = await getLevel(activeBoardTypes, difficulty)
+    history.current = []
+    setMoves((prev) => ({ ...prev, minimumMoves }))
+    updateBoard(getBoardStateFromLevel(level))
+  }, [activeBoardTypes, difficulty, setMoves, updateBoard])
 
   useEffect(() => {
     initLevel()
-  }, [initLevel])
-
-  const currentBoard = history.current[history.current.length - 1]
-
-  const updateBoard = (boardState: BoardState) => {
-    history.current.push(boardState)
-    setCurrentLevel(boardState.board)
-  }
+  }, [initLevel, setMoves])
 
   useEffect(() => {
     setMovingPiece(false)
   }, [currentLevel, setMovingPiece])
+
+  const currentBoard = history.current[history.current.length - 1]
 
   return (
     <div className="relative h-full w-full touch-none">

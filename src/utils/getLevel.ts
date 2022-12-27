@@ -14,9 +14,11 @@ export const getLevel = async (activeBoardTypes: ActiveBoardTypes, difficulty: M
 
   const finalMoves = possibleMoves.filter((value) => difficultyMoves.includes(value))
   const randomMove = finalMoves[Math.floor(Math.random() * finalMoves.length)]
+  if (!randomMove) throw new Error("No level found")
 
   const levels = (await import(`@assets/boards/${BOARD_TYPE_FOLDER[randomBoardType]}/${randomMove}.json`)) as string[]
   const randomLevel = levels[Math.floor(Math.random() * levels.length)]
+  if (!randomLevel) throw new Error("No level found")
 
-  return randomLevel
+  return { level: randomLevel, minimumMoves: randomMove }
 }

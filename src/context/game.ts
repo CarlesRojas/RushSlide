@@ -11,7 +11,8 @@ export const activeBoardTypesAtom = atom<ActiveBoardTypes>({
   [BoardType.ONE_WALL]: true,
   [BoardType.TWO_WALLS]: true,
 })
-
 export const difficultyAtom = atom<MinMax>({ min: 10, max: 12 })
 
+// GAME
 export const movingPieceAtom = atom(false)
+export const movesAtom = atom({ moves: 0, minimumMoves: 0 })
