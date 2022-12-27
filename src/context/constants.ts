@@ -22,3 +22,8 @@ export enum PieceType {
   WALL = "x",
   EMPTY = "o",
 }
+
+export enum Route {
+  HOME = "/",
+  GAME = "/game",
+}

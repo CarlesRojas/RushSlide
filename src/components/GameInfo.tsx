@@ -1,17 +1,16 @@
 import Button from "@components/Button"
+import { Route } from "@context/constants"
 import { movesAtom } from "@context/game"
 import { useAtom } from "jotai"
-import Link from "next/link"
 import { RiDeleteBackLine, RiHomeLine, RiRestartLine, RiShuffleLine } from "react-icons/ri"
+import Anchor from "./Anchor"
 
 const GameInfo = () => {
   const [{ moves, minimumMoves }] = useAtom(movesAtom)
   return (
     <div className="flex h-full w-full grow flex-col gap-8">
       <section className="relative grid w-full max-w-sm grid-cols-4 gap-3">
-        <Link href={"/"}>
-          <Button text={"Home"} icon={<RiHomeLine />} />
-        </Link>
+        <Anchor route={Route.HOME} text={"Home"} icon={<RiHomeLine />} />
         <Button text={"Random"} icon={<RiShuffleLine />} />
         <Button text={"Restart"} icon={<RiRestartLine />} />
         <Button text={"Undo"} icon={<RiDeleteBackLine />} />

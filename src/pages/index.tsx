@@ -1,7 +1,8 @@
-import Button from "@components/Button"
+import Anchor from "@components/Anchor"
+import Difficulty from "@components/Difficulty"
+import { Route } from "@context/constants"
 import type { NextPage } from "next"
 import Image from "next/future/image"
-import Link from "next/link"
 import { RiPlayLine } from "react-icons/ri"
 
 const Home: NextPage = () => {
@@ -12,12 +13,12 @@ const Home: NextPage = () => {
         <h1 className="text-6xl font-medium opacity-90">RUSH SLIDE</h1>
       </div>
 
-      <div></div>
+      <div className="flex w-full flex-col px-8">
+        <Difficulty />
+      </div>
 
       <div className="h-fit w-fit min-w-[10rem]">
-        <Link href={"/game"}>
-          <Button icon={<RiPlayLine />} text="Play" primary />
-        </Link>
+        <Anchor route={Route.GAME} icon={<RiPlayLine />} text="Play" primary />
       </div>
     </main>
   )
