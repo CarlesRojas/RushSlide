@@ -88,24 +88,23 @@ const Difficulty = () => {
   }
 
   return (
-    <div className="relative flex w-full flex-col gap-2">
-      <div className="relative flex w-full items-baseline gap-2">
-        <p>{"Minimum moves between:"}</p>
-        <h2 className="text-2xl font-semibold">{`${min} - ${max}`}</h2>
+    <div className="relative flex w-full flex-col gap-2  px-14">
+      <div className="relative flex w-full items-baseline justify-center gap-2">
+        <p>{"Minimum moves:"}</p>
+        <h2 className="whitespace-nowrap text-2xl font-semibold">{`${min} - ${max}`}</h2>
       </div>
 
-      <div className="h-6 w-full overflow-hidden rounded-[100vw] bg-neutral-200 dark:bg-neutral-800" ref={barRef}>
+      <div className="h-5 w-full overflow-hidden rounded-[100vw] bg-neutral-200 dark:bg-neutral-800" ref={barRef}>
         <motion.div
           className="h-full min-w-[2px] bg-blue-500"
-          // style={{ marginLeft: `${left.current}%`, width: `${right.current - left.current}%` }}
           initial={{ marginLeft: `${left.current}%`, width: `${right.current - left.current}%` }}
           animate={barMovement}
         />
       </div>
 
-      <div className="relative h-12 w-full">
+      <div className="relative h-11 w-full">
         <motion.div
-          className="absolute left-0 aspect-square h-full -translate-x-full cursor-ew-resize touch-none rounded-[100vw] rounded-tr-none border-2 border-solid border-white bg-blue-500 mouse:hover:bg-blue-600"
+          className="absolute left-0 aspect-square h-full -translate-x-full cursor-ew-resize touch-none rounded-[100vw] rounded-tr-none border-2 border-solid border-neutral-50 bg-blue-500 dark:border-neutral-900 mouse:hover:bg-blue-600"
           onPanStart={onLeftPanStart}
           onPan={onLeftPan}
           onPanEnd={onLeftPanEnd}
@@ -114,7 +113,7 @@ const Difficulty = () => {
         />
 
         <motion.div
-          className="absolute left-0 aspect-square h-full cursor-ew-resize touch-none rounded-[100vw] rounded-tl-none border-2 border-solid border-white bg-blue-500 mouse:hover:bg-blue-600"
+          className="absolute left-0 aspect-square h-full cursor-ew-resize touch-none rounded-[100vw] rounded-tl-none border-2 border-solid border-neutral-50 bg-blue-500 dark:border-neutral-900 mouse:hover:bg-blue-600"
           onPanStart={onRightPanStart}
           onPan={onRightPan}
           onPanEnd={onRightPanEnd}

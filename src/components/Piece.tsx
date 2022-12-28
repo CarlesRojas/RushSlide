@@ -86,7 +86,7 @@ const Piece = ({ piece, boardState, updateBoard }: Props) => {
         className={`pointer-events-none relative grid h-full w-full grid-cols-2 rounded-md selection:items-center lg:rounded-lg xl:rounded-xl ${
           red ? "bg-red-500" : "bg-blue-500"
         }`}
-        style={{ boxShadow: "inset 0 0 1rem 0 rgba(0, 0, 0, 0.25)" }}
+        style={{ boxShadow: "inset 0 0 1rem 0 rgba(0, 0, 0, 0.15)" }}
       >
         <div />
         {red && <HiArrowRight className="h-full w-full p-[20%] text-red-700" />}

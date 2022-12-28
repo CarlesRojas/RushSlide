@@ -14,6 +14,7 @@ html {
   position: relative;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -25,12 +26,14 @@ body {
   font-size: 16px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
 }
 
 #__next {
   position: relative;
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
 
 img,
