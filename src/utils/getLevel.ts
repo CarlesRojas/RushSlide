@@ -1,4 +1,4 @@
-import { BOARD_TYPE_FOLDER, POSSIBLE_MOVES } from "@context/constants"
+import { BOARD_TYPE_FOLDER, MAX_DIFFICULTY, POSSIBLE_MOVES } from "@context/constants"
 import { ActiveBoardTypes, BoardType, MinMax } from "@context/types"
 
 export const getLevel = async (activeBoardTypes: ActiveBoardTypes, difficulty: MinMax) => {
@@ -13,10 +13,19 @@ export const getLevel = async (activeBoardTypes: ActiveBoardTypes, difficulty: M
   const difficultyMoves = Array.from({ length: difficulty.max - difficulty.min + 1 }, (_, i) => i + difficulty.min)
 
   const finalMoves = possibleMoves.filter((value) => difficultyMoves.includes(value))
-  const randomMove = finalMoves[Math.floor(Math.random() * finalMoves.length)]
-  if (!randomMove) throw new Error("No level found")
+  let randomMove = finalMoves[Math.floor(Math.random() * finalMoves.length)] ?? difficulty.max
 
-  const levels = (await import(`@assets/boards/${BOARD_TYPE_FOLDER[randomBoardType]}/${randomMove}.json`)) as string[]
+  let levels: string[]
+
+  while (true) {
+    try {
+      levels = (await import(`@assets/boards/${BOARD_TYPE_FOLDER[randomBoardType]}/${randomMove}.json`)) as string[]
+      break
+    } catch {
+      randomMove = randomMove > MAX_DIFFICULTY / 2 ? randomMove - 1 : randomMove + 1
+    }
+  }
+
   const randomLevel = levels[Math.floor(Math.random() * levels.length)]
   if (!randomLevel) throw new Error("No level found")
 

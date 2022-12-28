@@ -27,3 +27,12 @@ export enum Route {
   HOME = "/",
   GAME = "/game",
 }
+
+export enum LocalStorageKey {
+  MIN_DIFFICULTY = "rushSlide-minDifficulty",
+  MAX_DIFFICULTY = "rushSlide-maxDifficulty",
+  NORMAL_BOARD_ACTIVE = "rushSlide-normalBoardActive",
+  ONE_WALL_BOARD_ACTIVE = "rushSlide-oneWallBoardActive",
+  TWO_WALLS_BOARD_ACTIVE = "rushSlide-twoWallsBoardActive",
+  FIRST_LEVEL_DONE = "rushSlide-firstLevelDone",
+}

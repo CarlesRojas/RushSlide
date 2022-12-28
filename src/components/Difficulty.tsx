@@ -1,8 +1,9 @@
-import { MAX_DIFFICULTY, MIN_DIFFICULTY } from "@context/constants"
+import { LocalStorageKey, MAX_DIFFICULTY, MIN_DIFFICULTY } from "@context/constants"
 import { difficultyAtom } from "@context/game"
 import { motion, PanInfo, useAnimation } from "framer-motion"
 import { useAtom } from "jotai"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
+import { reactLocalStorage } from "reactjs-localstorage"
 
 type PanEvent = MouseEvent | TouchEvent | PointerEvent
 
@@ -15,6 +16,7 @@ const Difficulty = () => {
   const barMovement = useAnimation()
 
   const barRef = useRef<HTMLDivElement>(null)
+  const loaded = useRef(false)
 
   const left = useRef(((min - MIN_DIFFICULTY) / (MAX_DIFFICULTY - MIN_DIFFICULTY)) * 100)
   const right = useRef(((max - MIN_DIFFICULTY) / (MAX_DIFFICULTY - MIN_DIFFICULTY)) * 100)
@@ -28,6 +30,7 @@ const Difficulty = () => {
     if (movingRight.current) return
     movingLeft.current = true
   }
+
   const onRightPanStart = () => {
     if (movingLeft.current) return
     movingRight.current = true
@@ -48,6 +51,8 @@ const Difficulty = () => {
     const newMinDifficulty = Math.round(
       (lastPercentage.current / 100) * (MAX_DIFFICULTY - MIN_DIFFICULTY) + MIN_DIFFICULTY,
     )
+
+    reactLocalStorage.set(LocalStorageKey.MIN_DIFFICULTY, newMinDifficulty)
     setDifficulty((prev) => ({ ...prev, min: newMinDifficulty }))
     leftMovement.set({ left: `${lastPercentage.current}%` })
     barMovement.set({ marginLeft: `${lastPercentage.current}%`, width: `${right.current - lastPercentage.current}%` })
@@ -68,6 +73,7 @@ const Difficulty = () => {
     const newMaxDifficulty = Math.round(
       (lastPercentage.current / 100) * (MAX_DIFFICULTY - MIN_DIFFICULTY) + MIN_DIFFICULTY,
     )
+    reactLocalStorage.set(LocalStorageKey.MAX_DIFFICULTY, newMaxDifficulty)
     setDifficulty((prev) => ({ ...prev, max: newMaxDifficulty }))
     rightMovement.set({ left: `${lastPercentage.current}%` })
     barMovement.set({ marginLeft: `${left.current}%`, width: `${lastPercentage.current - left.current}%` })
@@ -87,6 +93,27 @@ const Difficulty = () => {
     right.current = lastPercentage.current
   }
 
+  useEffect(() => {
+    const width = barRef.current?.clientWidth
+    if (!width) return
+
+    const minDifficulty = reactLocalStorage.get(LocalStorageKey.MIN_DIFFICULTY, 10, true)
+    const maxDifficulty = reactLocalStorage.get(LocalStorageKey.MAX_DIFFICULTY, 20, true)
+
+    loaded.current = true
+    const leftPercentage = ((minDifficulty - MIN_DIFFICULTY) / (MAX_DIFFICULTY - MIN_DIFFICULTY)) * 100
+    const rightPercentage = ((maxDifficulty - MIN_DIFFICULTY) / (MAX_DIFFICULTY - MIN_DIFFICULTY)) * 100
+
+    left.current = leftPercentage
+    right.current = rightPercentage
+
+    setDifficulty({ min: minDifficulty, max: maxDifficulty })
+
+    leftMovement.set({ left: `${leftPercentage}%` })
+    rightMovement.set({ left: `${rightPercentage}%` })
+    barMovement.set({ marginLeft: `${leftPercentage}%`, width: `${rightPercentage - leftPercentage}%` })
+  }, [barMovement, leftMovement, rightMovement, setDifficulty])
+
   return (
     <div className="relative flex w-full flex-col gap-2  px-14">
       <div className="relative flex w-full items-baseline justify-center gap-2">
@@ -95,31 +122,37 @@ const Difficulty = () => {
       </div>
 
       <div className="h-5 w-full overflow-hidden rounded-[100vw] bg-neutral-200 dark:bg-neutral-800" ref={barRef}>
-        <motion.div
-          className="h-full min-w-[2px] bg-blue-500"
-          initial={{ marginLeft: `${left.current}%`, width: `${right.current - left.current}%` }}
-          animate={barMovement}
-        />
+        {loaded.current && (
+          <motion.div
+            className="h-full min-w-[2px] bg-blue-500"
+            initial={{ marginLeft: `${left.current}%`, width: `${right.current - left.current}%` }}
+            animate={barMovement}
+          />
+        )}
       </div>
 
       <div className="relative h-11 w-full">
-        <motion.div
-          className="absolute left-0 aspect-square h-full -translate-x-full cursor-ew-resize touch-none rounded-[100vw] rounded-tr-none border-2 border-solid border-neutral-50 bg-blue-500 dark:border-neutral-900 mouse:hover:bg-blue-600"
-          onPanStart={onLeftPanStart}
-          onPan={onLeftPan}
-          onPanEnd={onLeftPanEnd}
-          initial={{ left: `${left.current}%` }}
-          animate={leftMovement}
-        />
+        {loaded.current && (
+          <motion.div
+            className="absolute left-0 aspect-square h-full -translate-x-full cursor-ew-resize touch-none rounded-[100vw] rounded-tr-none border-2 border-solid border-neutral-50 bg-blue-500 dark:border-neutral-900 mouse:hover:bg-blue-600"
+            onPanStart={onLeftPanStart}
+            onPan={onLeftPan}
+            onPanEnd={onLeftPanEnd}
+            initial={{ left: `${left.current}%` }}
+            animate={leftMovement}
+          />
+        )}
 
-        <motion.div
-          className="absolute left-0 aspect-square h-full cursor-ew-resize touch-none rounded-[100vw] rounded-tl-none border-2 border-solid border-neutral-50 bg-blue-500 dark:border-neutral-900 mouse:hover:bg-blue-600"
-          onPanStart={onRightPanStart}
-          onPan={onRightPan}
-          onPanEnd={onRightPanEnd}
-          initial={{ left: `${right.current}%` }}
-          animate={rightMovement}
-        />
+        {loaded.current && (
+          <motion.div
+            className="absolute left-0 aspect-square h-full cursor-ew-resize touch-none rounded-[100vw] rounded-tl-none border-2 border-solid border-neutral-50 bg-blue-500 dark:border-neutral-900 mouse:hover:bg-blue-600"
+            onPanStart={onRightPanStart}
+            onPan={onRightPan}
+            onPanEnd={onRightPanEnd}
+            initial={{ left: `${right.current}%` }}
+            animate={rightMovement}
+          />
+        )}
       </div>
     </div>
   )

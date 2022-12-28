@@ -5,3 +5,12 @@ Rush Slide is a puzzle game that challenges players to maneuver a series of piec
 ## Board
 
 All board configurations come from [this dataset](https://www.michaelfogleman.com/rush/).
+
+## TODO
+
+- [ ] Show victory and perfect message
+- [ ] Move red piece to the right when the user wins
+- [ ] Add functionality to random button
+- [ ] Add functionality to restart button
+- [ ] Add functionality to undo button
+- [ ] Show easy level the first time and then show a random level (save to local storage)

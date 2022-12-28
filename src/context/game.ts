@@ -8,10 +8,10 @@ export const landscapeAtom = atom(false)
 // SETTINGS
 export const activeBoardTypesAtom = atom<ActiveBoardTypes>({
   [BoardType.NORMAL]: true,
-  [BoardType.ONE_WALL]: true,
-  [BoardType.TWO_WALLS]: true,
+  [BoardType.ONE_WALL]: false,
+  [BoardType.TWO_WALLS]: false,
 })
-export const difficultyAtom = atom<MinMax>({ min: 10, max: 30 })
+export const difficultyAtom = atom<MinMax>({ min: 10, max: 20 })
 
 // GAME
 export const movingPieceAtom = atom(false)
