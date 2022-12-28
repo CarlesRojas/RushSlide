@@ -27,6 +27,7 @@ export interface BoardState {
   pieces: Piece[]
   walls: Wall[]
   board: string
+  minimumMoves: number
 }
 
 export interface Movement {

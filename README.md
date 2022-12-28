@@ -8,7 +8,6 @@ All board configurations come from [this dataset](https://www.michaelfogleman.co
 
 ## TODO
 
-- [ ] Show victory and perfect message
 - [ ] Move red piece to the right when the user wins
 - [ ] Add functionality to random button
 - [ ] Add functionality to restart button

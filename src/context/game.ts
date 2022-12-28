@@ -16,3 +16,7 @@ export const difficultyAtom = atom<MinMax>({ min: 10, max: 20 })
 // GAME
 export const movingPieceAtom = atom(false)
 export const movesAtom = atom({ moves: 0, minimumMoves: 0 })
+export const victoryAtom = atom({
+  victory: false,
+  perfect: false,
+})

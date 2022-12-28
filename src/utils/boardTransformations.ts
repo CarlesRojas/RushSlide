@@ -3,11 +3,12 @@ import { BoardState, Piece, Wall } from "@context/types"
 import { getPieceMovement } from "@utils/getPieceMovement"
 import uuid from "react-uuid"
 
-export const getBoardStateFromLevel = (level: string): BoardState => {
+export const getBoardStateFromLevel = (level: string, minimumMoves: number): BoardState => {
   const boardState: BoardState = {
     pieces: [],
     walls: [],
     board: level,
+    minimumMoves,
   }
 
   const board = getMatrixFromLevel(level)

@@ -1,10 +1,11 @@
 import Piece from "@components/Piece"
 import Wall from "@components/Wall"
 import { LocalStorageKey } from "@context/constants"
-import { activeBoardTypesAtom, difficultyAtom, movesAtom, movingPieceAtom } from "@context/game"
+import { activeBoardTypesAtom, difficultyAtom, movesAtom, movingPieceAtom, victoryAtom } from "@context/game"
 import { BoardState } from "@context/types"
 import { getBoardStateFromLevel } from "@utils/boardTransformations"
 import { getLevel } from "@utils/getLevel"
+import { isVictory } from "@utils/isVictory"
 import { useAtom } from "jotai"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { reactLocalStorage } from "reactjs-localstorage"
@@ -15,6 +16,7 @@ const Board = () => {
   const [activeBoardTypes] = useAtom(activeBoardTypesAtom)
   const [, setMovingPiece] = useAtom(movingPieceAtom)
   const [, setMoves] = useAtom(movesAtom)
+  const [, setVictory] = useAtom(victoryAtom)
 
   const history = useRef<BoardState[]>([])
   const [currentLevel, setCurrentLevel] = useState<string | null>(null)
@@ -24,8 +26,11 @@ const Board = () => {
       history.current.push(boardState)
       setCurrentLevel(boardState.board)
       setMoves((prev) => ({ ...prev, moves: history.current.length - 1 }))
+
+      const victoryResult = isVictory(boardState, history.current.length - 1)
+      setVictory(victoryResult)
     },
-    [setMoves],
+    [setMoves, setVictory],
   )
 
   const initLevel = useCallback(async () => {
@@ -36,7 +41,7 @@ const Board = () => {
 
     history.current = []
     setMoves((prev) => ({ ...prev, minimumMoves }))
-    updateBoard(getBoardStateFromLevel(level))
+    updateBoard(getBoardStateFromLevel(level, minimumMoves))
   }, [activeBoardTypes, difficulty, setMoves, updateBoard])
 
   useEffect(() => {

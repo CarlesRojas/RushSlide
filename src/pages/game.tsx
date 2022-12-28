@@ -45,6 +45,8 @@ const Home: NextPage = () => {
   const boardStyle = {
     width: boardWidth,
     height: boardWidth,
+    minHeight: boardWidth,
+    minWidth: boardWidth,
     marginBottom: landscape ? 0 : `${cellSize * 0.5}px`,
     marginTop: landscape ? 0 : `${cellSize * 0.5}px`,
     marginRight: landscape ? `${cellSize * 0.5}px` : 0,
