@@ -10,5 +10,4 @@ All board configurations come from [this dataset](https://www.michaelfogleman.co
 
 - [ ] Add functionality to random button
 - [ ] Add functionality to restart button
-- [ ] Add functionality to undo button
 - [ ] Clear game state when going to the menu

@@ -6,7 +6,6 @@ import { reactLocalStorage } from "reactjs-localstorage"
 
 const BoardTypeSelector = () => {
   const [activeBoardTypes, setActiveBoardTypes] = useAtom(activeBoardTypesAtom)
-  console.log(activeBoardTypes)
 
   const getOptionName = (type: BoardType) => {
     switch (type) {

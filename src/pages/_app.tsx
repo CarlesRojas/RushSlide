@@ -1,3 +1,4 @@
+import { EventsProvider } from "@context/events"
 import type { AppType } from "next/dist/shared/lib/utils"
 import Head from "next/head"
 import { useEffect } from "react"
@@ -16,7 +17,9 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <title>{"Rush Slide"}</title>
       </Head>
 
-      <Component {...pageProps} />
+      <EventsProvider>
+        <Component {...pageProps} />
+      </EventsProvider>
     </>
   )
 }

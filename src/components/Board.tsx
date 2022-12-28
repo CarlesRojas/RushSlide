@@ -1,6 +1,7 @@
 import Piece from "@components/Piece"
 import Wall from "@components/Wall"
 import { LocalStorageKey } from "@context/constants"
+import { Event, useEvents } from "@context/events"
 import { activeBoardTypesAtom, difficultyAtom, movesAtom, movingPieceAtom, victoryAtom } from "@context/game"
 import { BoardState } from "@context/types"
 import { getBoardStateFromLevel } from "@utils/boardTransformations"
@@ -12,6 +13,8 @@ import { reactLocalStorage } from "reactjs-localstorage"
 import Cell from "./Cell"
 
 const Board = () => {
+  const { sub, unsub } = useEvents()
+
   const [difficulty] = useAtom(difficultyAtom)
   const [activeBoardTypes] = useAtom(activeBoardTypesAtom)
   const [, setMovingPiece] = useAtom(movingPieceAtom)
@@ -32,6 +35,19 @@ const Board = () => {
     },
     [setMoves, setVictory],
   )
+  const handleUndoClicked = useCallback(() => {
+    if (history.current.length > 1) {
+      const newCurrentBoard = history.current[history.current.length - 2]
+      if (!newCurrentBoard) return
+
+      history.current.pop()
+      setCurrentLevel(newCurrentBoard.board)
+      setMoves((prev) => ({ ...prev, moves: history.current.length - 1 }))
+
+      const victoryResult = isVictory(newCurrentBoard, history.current.length - 1)
+      setVictory(victoryResult)
+    }
+  }, [setMoves, setVictory])
 
   const initLevel = useCallback(async () => {
     const firstLevelDone = (reactLocalStorage.get(LocalStorageKey.FIRST_LEVEL_DONE, "false", true) as string) === "true"
@@ -51,6 +67,14 @@ const Board = () => {
   useEffect(() => {
     setMovingPiece(false)
   }, [currentLevel, setMovingPiece])
+
+  useEffect(() => {
+    sub(Event.UNDO_MOVE, handleUndoClicked)
+
+    return () => {
+      unsub(Event.UNDO_MOVE, handleUndoClicked)
+    }
+  }, [handleUndoClicked, sub, unsub])
 
   const currentBoard = history.current[history.current.length - 1]
 

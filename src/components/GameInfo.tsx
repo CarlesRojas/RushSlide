@@ -1,5 +1,6 @@
 import Button from "@components/Button"
 import { Route } from "@context/constants"
+import { Event, useEvents } from "@context/events"
 import { movesAtom, victoryAtom } from "@context/game"
 import { useAtom } from "jotai"
 import { RiDeleteBackLine, RiHomeLine, RiRestartLine, RiShuffleLine } from "react-icons/ri"
@@ -8,14 +9,15 @@ import Anchor from "./Anchor"
 const GameInfo = () => {
   const [{ moves, minimumMoves }] = useAtom(movesAtom)
   const [{ victory, perfect }] = useAtom(victoryAtom)
+  const { emit } = useEvents()
 
   return (
     <div className="flex h-full w-full grow flex-col gap-3 overflow-hidden">
       <section className="relative grid w-full max-w-sm grid-cols-4 gap-3 landscape:grid-cols-2 md:landscape:grid-cols-4">
         <Anchor route={Route.HOME} text={"Home"} icon={<RiHomeLine />} />
         <Button text={"Random"} icon={<RiShuffleLine />} />
-        <Button text={"Restart"} icon={<RiRestartLine />} />
-        <Button text={"Undo"} icon={<RiDeleteBackLine />} />
+        <Button text={"Restart"} icon={<RiRestartLine />} disabled={moves <= 0} />
+        <Button text={"Undo"} icon={<RiDeleteBackLine />} disabled={moves <= 0} onClick={() => emit(Event.UNDO_MOVE)} />
       </section>
 
       <div className="flex w-full grow flex-col overflow-hidden">
