@@ -2,12 +2,14 @@ import Anchor from "@components/Anchor"
 import BoardTypeSelector from "@components/BoardTypeSelector"
 import Difficulty from "@components/Difficulty"
 import { Route } from "@context/constants"
+import { useClearGameState } from "@hooks/useClearGameState"
 import { useLocalStorageSettings } from "@hooks/useLocalStorageSettings"
 import type { NextPage } from "next"
 import Image from "next/future/image"
 import { RiPlayLine } from "react-icons/ri"
 
 const Home: NextPage = () => {
+  useClearGameState()
   const loaded = useLocalStorageSettings()
   if (!loaded) return null
 
