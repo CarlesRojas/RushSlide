@@ -16,7 +16,7 @@ const GameInfo = () => {
       <section className="relative grid w-full max-w-sm grid-cols-4 gap-3 landscape:grid-cols-2 md:landscape:grid-cols-4">
         <Anchor route={Route.HOME} text={"Home"} icon={<RiHomeLine />} />
         <Button text={"Random"} icon={<RiShuffleLine />} />
-        <Button text={"Restart"} icon={<RiRestartLine />} disabled={moves <= 0} />
+        <Button text={"Restart"} icon={<RiRestartLine />} disabled={moves <= 0} onClick={() => emit(Event.RESTART)} />
         <Button text={"Undo"} icon={<RiDeleteBackLine />} disabled={moves <= 0} onClick={() => emit(Event.UNDO_MOVE)} />
       </section>
 

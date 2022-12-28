@@ -35,12 +35,27 @@ const Board = () => {
     },
     [setMoves, setVictory],
   )
+
   const handleUndoClicked = useCallback(() => {
     if (history.current.length > 1) {
       const newCurrentBoard = history.current[history.current.length - 2]
       if (!newCurrentBoard) return
 
       history.current.pop()
+      setCurrentLevel(newCurrentBoard.board)
+      setMoves((prev) => ({ ...prev, moves: history.current.length - 1 }))
+
+      const victoryResult = isVictory(newCurrentBoard, history.current.length - 1)
+      setVictory(victoryResult)
+    }
+  }, [setMoves, setVictory])
+
+  const handleRestartClicked = useCallback(() => {
+    if (history.current.length > 1) {
+      const newCurrentBoard = history.current[0]
+      if (!newCurrentBoard) return
+
+      history.current = [newCurrentBoard]
       setCurrentLevel(newCurrentBoard.board)
       setMoves((prev) => ({ ...prev, moves: history.current.length - 1 }))
 
@@ -70,11 +85,13 @@ const Board = () => {
 
   useEffect(() => {
     sub(Event.UNDO_MOVE, handleUndoClicked)
+    sub(Event.RESTART, handleRestartClicked)
 
     return () => {
       unsub(Event.UNDO_MOVE, handleUndoClicked)
+      unsub(Event.RESTART, handleRestartClicked)
     }
-  }, [handleUndoClicked, sub, unsub])
+  }, [handleRestartClicked, handleUndoClicked, sub, unsub])
 
   const currentBoard = history.current[history.current.length - 1]
 

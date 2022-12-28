@@ -3,6 +3,7 @@ import { createContext, useContext, useRef } from "react"
 
 enum Event {
   UNDO_MOVE = "undoMove",
+  RESTART = "restart",
 }
 
 type State = {
