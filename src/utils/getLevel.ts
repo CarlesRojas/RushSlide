@@ -1,7 +1,13 @@
 import { BOARD_TYPE_FOLDER, MAX_DIFFICULTY, POSSIBLE_MOVES } from "@context/constants"
 import { ActiveBoardTypes, BoardType, MinMax } from "@context/types"
 
-export const getLevel = async (activeBoardTypes: ActiveBoardTypes, difficulty: MinMax) => {
+export const getLevel = async (activeBoardTypes: ActiveBoardTypes, difficulty: MinMax, first = false) => {
+  if (first) {
+    const levels = (await import(`@assets/boards/normal/2.json`)) as string[]
+    const level = levels[2] as string
+    return { level, minimumMoves: 2 }
+  }
+
   const boardTypes = []
 
   if (activeBoardTypes[BoardType.NORMAL]) boardTypes.push(BoardType.NORMAL)

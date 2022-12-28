@@ -2,11 +2,14 @@ import Board from "@components/Board"
 import GameInfo from "@components/GameInfo"
 import { GRID_SIZE } from "@context/constants"
 import { cellSizeAtom, landscapeAtom } from "@context/game"
+import { useLocalStorageSettings } from "@hooks/useLocalStorageSettings"
 import useResize from "@hooks/useResize"
 import { useAtom } from "jotai"
 import type { NextPage } from "next"
 
 const Home: NextPage = () => {
+  const loaded = useLocalStorageSettings()
+
   const [cellSize, setCellSize] = useAtom(cellSizeAtom)
   const [landscape, setLandscape] = useAtom(landscapeAtom)
 
@@ -47,6 +50,8 @@ const Home: NextPage = () => {
     marginRight: landscape ? `${cellSize * 0.5}px` : 0,
     marginLeft: landscape ? `${cellSize * 0.5}px` : 0,
   }
+
+  if (!loaded) return null
 
   return (
     <main className="relative flex h-full w-full flex-col items-center justify-end landscape:flex-row">

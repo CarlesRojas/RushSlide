@@ -1,11 +1,13 @@
 import Piece from "@components/Piece"
 import Wall from "@components/Wall"
+import { LocalStorageKey } from "@context/constants"
 import { activeBoardTypesAtom, difficultyAtom, movesAtom, movingPieceAtom } from "@context/game"
 import { BoardState } from "@context/types"
 import { getBoardStateFromLevel } from "@utils/boardTransformations"
 import { getLevel } from "@utils/getLevel"
 import { useAtom } from "jotai"
 import { useCallback, useEffect, useRef, useState } from "react"
+import { reactLocalStorage } from "reactjs-localstorage"
 import Cell from "./Cell"
 
 const Board = () => {
@@ -27,7 +29,11 @@ const Board = () => {
   )
 
   const initLevel = useCallback(async () => {
-    const { level, minimumMoves } = await getLevel(activeBoardTypes, difficulty)
+    const firstLevelDone = (reactLocalStorage.get(LocalStorageKey.FIRST_LEVEL_DONE, "false", true) as string) === "true"
+    if (!firstLevelDone) reactLocalStorage.set(LocalStorageKey.FIRST_LEVEL_DONE, "true")
+
+    const { level, minimumMoves } = await getLevel(activeBoardTypes, difficulty, !firstLevelDone)
+
     history.current = []
     setMoves((prev) => ({ ...prev, minimumMoves }))
     updateBoard(getBoardStateFromLevel(level))

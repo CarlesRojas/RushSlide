@@ -13,4 +13,4 @@ All board configurations come from [this dataset](https://www.michaelfogleman.co
 - [ ] Add functionality to random button
 - [ ] Add functionality to restart button
 - [ ] Add functionality to undo button
-- [ ] Show easy level the first time and then show a random level (save to local storage)
+- [ ] Show tutorial if it is the first level

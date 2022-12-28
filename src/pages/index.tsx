@@ -2,11 +2,15 @@ import Anchor from "@components/Anchor"
 import BoardTypeSelector from "@components/BoardTypeSelector"
 import Difficulty from "@components/Difficulty"
 import { Route } from "@context/constants"
+import { useLocalStorageSettings } from "@hooks/useLocalStorageSettings"
 import type { NextPage } from "next"
 import Image from "next/future/image"
 import { RiPlayLine } from "react-icons/ri"
 
 const Home: NextPage = () => {
+  const loaded = useLocalStorageSettings()
+  if (!loaded) return null
+
   return (
     <main className="relative m-auto flex h-full w-full max-w-xl flex-col items-center justify-center gap-24 overflow-hidden">
       <div className="flex flex-col items-center justify-center gap-6">
