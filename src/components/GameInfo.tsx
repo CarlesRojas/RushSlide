@@ -25,10 +25,21 @@ const GameInfo = () => {
           <p>{`/ ${minimumMoves}`}</p>
         </section>
 
-        <section className="relative flex grow flex-col items-center justify-center">
-          {victory && <h2 className="text-2xl font-semibold text-blue-500 md:text-4xl">Victory!</h2>}
-          {perfect && <p className="font-semibold md:text-lg">Perfect Game</p>}
-        </section>
+        {victory && (
+          <section className="relative flex grow flex-col justify-center gap-2">
+            <h2 className="text-2xl font-semibold text-blue-500 md:text-4xl">Victory!</h2>
+            {perfect && <p className="font-semibold md:text-lg">Perfect Game</p>}
+          </section>
+        )}
+
+        {!victory && minimumMoves > 0 && minimumMoves < 3 && (
+          <section className="relative flex grow flex-col justify-center gap-2">
+            <h2 className="text-2xl font-semibold text-blue-500">How to play:</h2>
+            <p className="font-semibold md:text-lg">
+              Make way for the red piece to escape to the right by moving the blue pieces out of the way
+            </p>
+          </section>
+        )}
       </div>
     </div>
   )

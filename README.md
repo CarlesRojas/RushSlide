@@ -8,8 +8,7 @@ All board configurations come from [this dataset](https://www.michaelfogleman.co
 
 ## TODO
 
-- [ ] Move red piece to the right when the user wins
 - [ ] Add functionality to random button
 - [ ] Add functionality to restart button
 - [ ] Add functionality to undo button
-- [ ] Show tutorial if it is the first level
+- [ ] Clear game state when going to the menu
