@@ -1,10 +1,10 @@
-import { cellSizeAtom, movingPieceAtom } from "@context/game"
+import { cellSizeAtom, movingPieceAtom, victoryAtom } from "@context/game"
 import { BoardState, Piece } from "@context/types"
 import { movePiece } from "@utils/movePiece"
 import { motion, PanInfo, useAnimation } from "framer-motion"
 import { useAtom } from "jotai"
 import { useRef } from "react"
-import { HiArrowRight } from "react-icons/hi"
+import { HiArrowRight, HiCheck } from "react-icons/hi"
 
 type PanEvent = MouseEvent | TouchEvent | PointerEvent
 
@@ -17,6 +17,7 @@ interface Props {
 const Piece = ({ piece, boardState, updateBoard }: Props) => {
   const [cellSize] = useAtom(cellSizeAtom)
   const [movingPiece, setMovingPiece] = useAtom(movingPieceAtom)
+  const [{ victory }] = useAtom(victoryAtom)
 
   const moving = useRef(false)
   const displacement = useRef(0)
@@ -89,7 +90,8 @@ const Piece = ({ piece, boardState, updateBoard }: Props) => {
         style={{ boxShadow: "inset 0 0 1rem 0 rgba(0, 0, 0, 0.15)" }}
       >
         <div />
-        {red && <HiArrowRight className="h-full w-full p-[20%] text-red-700" />}
+        {red && !victory && <HiArrowRight className="h-full w-full p-[20%] text-red-700" />}
+        {red && victory && <HiCheck className="h-full w-full p-[20%] text-red-700" />}
       </div>
     </motion.div>
   )
