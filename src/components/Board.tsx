@@ -36,6 +36,20 @@ const Board = () => {
     [setMoves, setVictory],
   )
 
+  const initLevel = useCallback(async () => {
+    const firstLevelDone = (reactLocalStorage.get(LocalStorageKey.FIRST_LEVEL_DONE, "false", true) as string) === "true"
+    if (!firstLevelDone) reactLocalStorage.set(LocalStorageKey.FIRST_LEVEL_DONE, "true")
+
+    const { level, minimumMoves } = await getLevel(activeBoardTypes, difficulty, !firstLevelDone)
+
+    history.current = []
+    setCurrentLevel(null)
+    setMovingPiece(false)
+    setVictory({ victory: false, perfect: false })
+    setMoves({ moves: 0, minimumMoves })
+    updateBoard(getBoardStateFromLevel(level, minimumMoves))
+  }, [activeBoardTypes, difficulty, setMoves, setMovingPiece, setVictory, updateBoard])
+
   const handleUndoClicked = useCallback(() => {
     if (history.current.length > 1) {
       const newCurrentBoard = history.current[history.current.length - 2]
@@ -64,16 +78,9 @@ const Board = () => {
     }
   }, [setMoves, setVictory])
 
-  const initLevel = useCallback(async () => {
-    const firstLevelDone = (reactLocalStorage.get(LocalStorageKey.FIRST_LEVEL_DONE, "false", true) as string) === "true"
-    if (!firstLevelDone) reactLocalStorage.set(LocalStorageKey.FIRST_LEVEL_DONE, "true")
-
-    const { level, minimumMoves } = await getLevel(activeBoardTypes, difficulty, !firstLevelDone)
-
-    history.current = []
-    setMoves((prev) => ({ ...prev, minimumMoves }))
-    updateBoard(getBoardStateFromLevel(level, minimumMoves))
-  }, [activeBoardTypes, difficulty, setMoves, updateBoard])
+  const handleRandomClicked = useCallback(() => {
+    initLevel()
+  }, [initLevel])
 
   useEffect(() => {
     initLevel()
@@ -86,12 +93,14 @@ const Board = () => {
   useEffect(() => {
     sub(Event.UNDO_MOVE, handleUndoClicked)
     sub(Event.RESTART, handleRestartClicked)
+    sub(Event.RANDOM, handleRandomClicked)
 
     return () => {
       unsub(Event.UNDO_MOVE, handleUndoClicked)
       unsub(Event.RESTART, handleRestartClicked)
+      unsub(Event.RANDOM, handleRandomClicked)
     }
-  }, [handleRestartClicked, handleUndoClicked, sub, unsub])
+  }, [handleRandomClicked, handleRestartClicked, handleUndoClicked, sub, unsub])
 
   const currentBoard = history.current[history.current.length - 1]
 

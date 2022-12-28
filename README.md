@@ -8,5 +8,4 @@ All board configurations come from [this dataset](https://www.michaelfogleman.co
 
 ## TODO
 
-- [ ] Add functionality to random button
 - [ ] Clear game state when going to the menu
