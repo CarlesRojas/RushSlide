@@ -57,9 +57,6 @@ self.addEventListener("fetch", (event) => {
           const cache = await caches.open(CACHE)
           let cachedResp
 
-          console.log(event.request)
-          console.log(event.request.url)
-
           if (event.request.url.includes("Teko.ttf")) cachedResp = await cache.match(offlineFont)
           else if (event.request.url.includes("favicon.ico")) cachedResp = await cache.match(offlineIcon)
           else cachedResp = await cache.match(offlineImage)
