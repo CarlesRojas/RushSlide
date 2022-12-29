@@ -4,6 +4,7 @@
   "description": "Rush Slide is a puzzle game where players must create a path for the red piece to exit a congested grid by maneuvering other pieces using logic and strategy.",
   "categories": ["entertainment", "games"],
   "lang": "en-US",
+  "start_url": ".",
   "display": "standalone",
   "theme_color": "#171717",
   "background_color": "#171717",
