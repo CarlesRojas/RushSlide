@@ -5,7 +5,7 @@
   "categories": ["entertainment", "games"],
   "lang": "en",
   "start_url": ".",
-  "scope": "https://rushslide.vercel.app",
+  "scope": ".",
   "theme_color": "#171717",
   "background_color": "#171717",
   "dir": "ltr",
