@@ -44,13 +44,11 @@ self.addEventListener("fetch", (event) => {
           const cache = await caches.open(CACHE)
           let cachedResp
 
-          if (event.request.headers.get("accept").includes("text/html"))
-            cachedResp = await cache.match(offlineFallbackPage)
-          else if (event.request.headers.get("accept").includes("image")) cachedResp = await cache.match(offlineImage)
-          else if (event.request.headers.get("accept").includes("font")) cachedResp = await cache.match(offlineFont)
-          else if (event.request.headers.get("accept").includes("icon")) cachedResp = await cache.match(offlineIcon)
+          if (event.request.url.includes("logo.png")) cachedResp = await cache.match(offlineImage)
+          else if (event.request.url.includes("Teko.ttf")) cachedResp = await cache.match(offlineFont)
+          else if (event.request.url.includes("favicon.ico")) cachedResp = await cache.match(offlineIcon)
+          else cachedResp = await cache.match(offlineFallbackPage)
 
-          console.log(event.request.headers.get("accept"))
           return cachedResp
         }
       })(),
