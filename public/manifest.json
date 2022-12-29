@@ -12,6 +12,7 @@
   "orientation": "any",
   "display": "standalone",
   "display_override": ["window-control-overlay", "standalone", "browser"],
+  "prefer_related_applications": false,
 
   "icons": [
     {
