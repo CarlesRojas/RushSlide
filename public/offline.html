@@ -1,12 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rush Slide offline</title>
+    <meta name="application-name" content="Rush Slide" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Rush Slide" />
+    <meta
+      name="description"
+      content="Rush Slide is a puzzle game where players must create a path for the red piece to exit a congested grid by maneuvering other pieces using logic and strategy."
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafafa" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171717" />
+    <meta name="viewport" content="initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover" />
+
+    <title>Rush Slide</title>
   </head>
+
   <body>
-    <p>This app only works online</p>
+    <img src="logo.png" alt="rush slide logo" />
+    <h1>RUSH SLIDE</h1>
+    <p>This game only works online</p>
   </body>
+
+  <style>
+    @font-face {
+      font-family: "Teko";
+      src: url("Teko.ttf");
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+      overscroll-behavior: touch;
+    }
+
+    html {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      user-select: none;
+      position: relative;
+      height: 100%;
+      width: 100%;
+      font-family: "Montserrat", sans-serif;
+      font-feature-settings: "tnum";
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow: hidden;
+      background-color: #171717;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    img {
+      display: block;
+      width: 6em;
+      height: 6em;
+    }
+
+    h1 {
+      font-family: "Teko", sans-serif;
+      font-size: 3rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      opacity: 0.8;
+      margin-top: 2rem;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #171717;
+        color: white;
+      }
+    }
+
+    @media (prefers-color-scheme: light) {
+      body {
+        background-color: #fafafa;
+        color: black;
+      }
+    }
+  </style>
 </html>

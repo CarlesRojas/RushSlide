@@ -5,6 +5,7 @@ importScripts("https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox
 const CACHE = "pwabuilder-page"
 
 const offlineFallbackPage = "offline.html"
+const offlineFont = "Teko.ttf"
 
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
@@ -13,7 +14,12 @@ self.addEventListener("message", (event) => {
 })
 
 self.addEventListener("install", async (event) => {
-  event.waitUntil(caches.open(CACHE).then((cache) => cache.add(offlineFallbackPage)))
+  event.waitUntil(
+    caches.open(CACHE).then((cache) => {
+      cache.add(offlineFallbackPage)
+      cache.add(offlineFont)
+    }),
+  )
 })
 
 if (workbox.navigationPreload.isSupported()) {
