@@ -39,16 +39,30 @@ self.addEventListener("fetch", (event) => {
           return networkResp
         } catch (error) {
           const cache = await caches.open(CACHE)
+          const cachedResp = await cache.match(offlineFallbackPage)
+          return cachedResp
+        }
+      })(),
+    )
+  } else {
+    event.respondWith(
+      (async () => {
+        try {
+          const preloadResp = await event.preloadResponse
+          if (preloadResp) return preloadResp
+
+          const networkResp = await fetch(event.request)
+          return networkResp
+        } catch (error) {
+          const cache = await caches.open(CACHE)
           let cachedResp
 
           console.log(event.request)
           console.log(event.request.url)
 
-          if (event.request.url.includes("logo.png")) cachedResp = await cache.match(offlineImage)
-          else if (event.request.url.includes("Teko.ttf")) cachedResp = await cache.match(offlineFont)
+          if (event.request.url.includes("Teko.ttf")) cachedResp = await cache.match(offlineFont)
           else if (event.request.url.includes("favicon.ico")) cachedResp = await cache.match(offlineIcon)
-          else cachedResp = await cache.match(offlineFallbackPage)
-          console.log(cachedResp)
+          else cachedResp = await cache.match(offlineImage)
 
           return cachedResp
         }
