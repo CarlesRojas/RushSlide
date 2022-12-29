@@ -13,6 +13,7 @@
   "display": "standalone",
   "display_override": ["window-control-overlay", "standalone", "browser"],
   "prefer_related_applications": false,
+  "iarc_rating_id": "5b38003c-87d6-4143-b47a-5489682e206c",
 
   "icons": [
     {
