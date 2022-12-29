@@ -2,7 +2,7 @@
 
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js")
 
-const CACHE = "pwabuilder-page"
+const CACHE = "rushSlide_v1"
 
 const offlineFallbackPage = "offline.html"
 const offlineFont = "Teko.ttf"
@@ -33,10 +33,7 @@ self.addEventListener("fetch", (event) => {
       (async () => {
         try {
           const preloadResp = await event.preloadResponse
-
-          if (preloadResp) {
-            return preloadResp
-          }
+          if (preloadResp) return preloadResp
 
           const networkResp = await fetch(event.request)
           return networkResp
@@ -44,10 +41,14 @@ self.addEventListener("fetch", (event) => {
           const cache = await caches.open(CACHE)
           let cachedResp
 
+          console.log(event.request)
+          console.log(event.request.url)
+
           if (event.request.url.includes("logo.png")) cachedResp = await cache.match(offlineImage)
           else if (event.request.url.includes("Teko.ttf")) cachedResp = await cache.match(offlineFont)
           else if (event.request.url.includes("favicon.ico")) cachedResp = await cache.match(offlineIcon)
           else cachedResp = await cache.match(offlineFallbackPage)
+          console.log(cachedResp)
 
           return cachedResp
         }
