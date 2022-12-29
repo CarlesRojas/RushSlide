@@ -6,6 +6,8 @@ const CACHE = "pwabuilder-page"
 
 const offlineFallbackPage = "offline.html"
 const offlineFont = "Teko.ttf"
+const offlineImage = "logo.png"
+const offlineIcon = "favicon.ico"
 
 self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
@@ -16,8 +18,7 @@ self.addEventListener("message", (event) => {
 self.addEventListener("install", async (event) => {
   event.waitUntil(
     caches.open(CACHE).then((cache) => {
-      cache.add(offlineFallbackPage)
-      cache.add(offlineFont)
+      cache.addAll([offlineFallbackPage, offlineFont, offlineImage, offlineIcon])
     }),
   )
 })
@@ -41,7 +42,15 @@ self.addEventListener("fetch", (event) => {
           return networkResp
         } catch (error) {
           const cache = await caches.open(CACHE)
-          const cachedResp = await cache.match(offlineFallbackPage)
+          let cachedResp
+
+          if (event.request.headers.get("accept").includes("text/html"))
+            cachedResp = await cache.match(offlineFallbackPage)
+          else if (event.request.headers.get("accept").includes("image")) cachedResp = await cache.match(offlineImage)
+          else if (event.request.headers.get("accept").includes("font")) cachedResp = await cache.match(offlineFont)
+          else if (event.request.headers.get("accept").includes("icon")) cachedResp = await cache.match(offlineIcon)
+
+          console.log(event.request.headers.get("accept"))
           return cachedResp
         }
       })(),
