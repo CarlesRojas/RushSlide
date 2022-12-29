@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.vercel.rushslide",
+      "sha256_cert_fingerprints": [
+        "41:1D:0D:DE:40:D0:47:BA:5B:3E:66:CD:54:2B:C8:DD:23:83:56:6E:23:05:9C:3C:F4:68:A7:CF:1E:2A:1E:DC"
+      ]
+    }
+  }
+]
