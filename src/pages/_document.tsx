@@ -6,7 +6,7 @@ export default function Document() {
       <Head>
         <meta name="application-name" content="Rush Slide" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="apple-mobile-web-app-title" content="Rush Slide" />
         <meta
           name="description"
@@ -14,7 +14,9 @@ export default function Document() {
         />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="theme-color" content="#000000" />
+
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fafafa" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#171717" />
 
         <link rel="apple-touch-icon" href="/appleIcon120.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/appleIcon180.png" />

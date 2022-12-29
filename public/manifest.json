@@ -1,6 +1,13 @@
 {
   "short_name": "Rush Slide",
   "name": "Rush Slide",
+  "description": "Rush Slide is a puzzle game where players must create a path for the red piece to exit a congested grid by maneuvering other pieces using logic and strategy.",
+  "categories": ["entertainment", "games"],
+  "lang": "en-US",
+  "display": "standalone",
+  "theme_color": "#171717",
+  "background_color": "#171717",
+
   "icons": [
     {
       "src": "favicon.ico",
@@ -30,8 +37,74 @@
       "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#1e212c",
-  "background_color": "#1e212c"
+  "screenshots": [
+    {
+      "src": "screenshot1.webp",
+      "sizes": "480x848",
+      "type": "image/webp",
+      "platform": "narrow",
+      "label": "A Rush Slide level"
+    },
+    {
+      "src": "screenshot2.webp",
+      "sizes": "480x848",
+      "type": "image/webp",
+      "platform": "narrow",
+      "label": "The menu of Rush Slide"
+    },
+    {
+      "src": "screenshot3.webp",
+      "sizes": "480x848",
+      "type": "image/webp",
+      "platform": "narrow",
+      "label": "A perfect game of Rush Slide"
+    },
+    {
+      "src": "screenshot4.webp",
+      "sizes": "480x848",
+      "type": "image/webp",
+      "platform": "narrow",
+      "label": "Light theme level of Rush Slide"
+    },
+    {
+      "src": "screenshotWide1.webp",
+      "sizes": "1366x768",
+      "type": "image/webp",
+      "platform": "wide",
+      "label": "A Rush Slide level"
+    },
+    {
+      "src": "screenshotWide2.webp",
+      "sizes": "1366x768",
+      "type": "image/webp",
+      "platform": "wide",
+      "label": "The menu of Rush Slide"
+    },
+    {
+      "src": "screenshotWide3.webp",
+      "sizes": "1366x768",
+      "type": "image/webp",
+      "platform": "wide",
+      "label": "A perfect game of Rush Slide"
+    },
+    {
+      "src": "screenshotWide4.webp",
+      "sizes": "1366x768",
+      "type": "image/webp",
+      "platform": "wide",
+      "label": "Light theme level of Rush Slide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Change difficulty",
+      "url": "/",
+      "description": "Change the difficulty of the game"
+    },
+    {
+      "name": "Play",
+      "url": "/game",
+      "description": "Play the game"
+    }
+  ]
 }
