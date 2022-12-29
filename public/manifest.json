@@ -1,13 +1,17 @@
 {
   "short_name": "Rush Slide",
-  "name": "Rush Slide",
+  "name": "RushSlide",
   "description": "Rush Slide is a puzzle game where players must create a path for the red piece to exit a congested grid by maneuvering other pieces using logic and strategy.",
   "categories": ["entertainment", "games"],
-  "lang": "en-US",
+  "lang": "en",
   "start_url": ".",
-  "display": "standalone",
+  "scope": "https://rushslide.vercel.app",
   "theme_color": "#171717",
   "background_color": "#171717",
+  "dir": "ltr",
+  "orientation": "any",
+  "display": "standalone",
+  "display_override": ["window-control-overlay", "standalone", "browser"],
 
   "icons": [
     {
