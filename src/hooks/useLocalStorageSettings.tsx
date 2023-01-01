@@ -12,8 +12,8 @@ export const useLocalStorageSettings = () => {
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    const minDifficulty = reactLocalStorage.get(LocalStorageKey.MIN_DIFFICULTY, 10, true)
-    const maxDifficulty = reactLocalStorage.get(LocalStorageKey.MAX_DIFFICULTY, 20, true)
+    const minDifficulty = parseInt(reactLocalStorage.get(LocalStorageKey.MIN_DIFFICULTY, "10", true))
+    const maxDifficulty = parseInt(reactLocalStorage.get(LocalStorageKey.MAX_DIFFICULTY, "20", true))
     setDifficulty({ min: minDifficulty, max: maxDifficulty })
 
     const normalBoardActive =
