@@ -29,7 +29,7 @@ const GameInfo = () => {
 
         {victory && (
           <section className="relative flex grow flex-col justify-center gap-2">
-            <h2 className="text-2xl font-semibold text-blue-500 md:text-4xl">
+            <h2 className="text-xl font-semibold text-blue-500 md:text-4xl">
               {perfect ? "Victory! Perfect Game" : "Victory!"}
             </h2>
             <Button text={"New level"} icon={<RiAddFill />} onClick={() => emit(Event.RANDOM)} primary blue />
