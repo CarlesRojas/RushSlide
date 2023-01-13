@@ -3,13 +3,16 @@ interface Props extends React.HTMLAttributes<HTMLButtonElement> {
   text: string
   primary?: boolean
   disabled?: boolean
+  blue?: boolean
 }
 
-const Button = ({ icon, text, primary, disabled, ...rest }: Props) => {
+const Button = ({ icon, text, primary, disabled, blue, ...rest }: Props) => {
   return (
     <button
       className={`${
-        primary
+        primary && blue
+          ? "flex-row gap-2 bg-blue-500 text-white mouse:hover:bg-blue-600"
+          : primary
           ? "flex-row gap-2 bg-red-500 text-white mouse:hover:bg-red-600"
           : "flex-col gap-1 bg-neutral-200 dark:bg-neutral-800 mouse:hover:bg-neutral-300 mouse:hover:dark:bg-neutral-700"
       } ${

@@ -3,7 +3,7 @@ import { Route } from "@context/constants"
 import { Event, useEvents } from "@context/events"
 import { movesAtom, victoryAtom } from "@context/game"
 import { useAtom } from "jotai"
-import { RiDeleteBackLine, RiHomeLine, RiRestartLine, RiShuffleLine } from "react-icons/ri"
+import { RiAddFill, RiDeleteBackLine, RiHomeLine, RiRestartLine } from "react-icons/ri"
 import Anchor from "./Anchor"
 
 const GameInfo = () => {
@@ -15,7 +15,7 @@ const GameInfo = () => {
     <div className="flex h-full w-full grow flex-col gap-3 overflow-hidden">
       <section className="relative grid w-full max-w-[30rem] grid-cols-4 gap-3 landscape:grid-cols-2 md:landscape:grid-cols-4">
         <Anchor route={Route.HOME} text={"Home"} icon={<RiHomeLine />} />
-        <Button text={"Random"} icon={<RiShuffleLine />} onClick={() => emit(Event.RANDOM)} />
+        <Button text={"New"} icon={<RiAddFill />} onClick={() => emit(Event.RANDOM)} />
         <Button text={"Restart"} icon={<RiRestartLine />} disabled={moves <= 0} onClick={() => emit(Event.RESTART)} />
         <Button text={"Undo"} icon={<RiDeleteBackLine />} disabled={moves <= 0} onClick={() => emit(Event.UNDO_MOVE)} />
       </section>
@@ -29,8 +29,10 @@ const GameInfo = () => {
 
         {victory && (
           <section className="relative flex grow flex-col justify-center gap-2">
-            <h2 className="text-2xl font-semibold text-blue-500 md:text-4xl">Victory!</h2>
-            {perfect && <p className="font-semibold md:text-lg">Perfect Game</p>}
+            <h2 className="text-2xl font-semibold text-blue-500 md:text-4xl">
+              {perfect ? "Victory! Perfect Game" : "Victory!"}
+            </h2>
+            <Button text={"New level"} icon={<RiAddFill />} onClick={() => emit(Event.RANDOM)} primary blue />
           </section>
         )}
 
